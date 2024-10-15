@@ -1,48 +1,47 @@
-const userModel = require('../model/userM')
+const userModel = require('../model/userModel')
 const bcryptjs = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const {sendMail} = require('../helpers/sendMail')
-const {signUpTemplate,verifyTemplate,forgotPasswordTemplate} = require('../helpers/HTML')
+const signUpTemplate = require('../helpers/html')
 const fs = require('fs')
 require ("dotenv").config()
 
 
 exports.signUp = async(req,res)=>{
     try {
-        const {Name,Email,Password,PhoneNumber,Location} = req.body
-        if(!Name || !Email || !Location || !Password || !PhoneNumber){
+        const {fullName,email,password} = req.body
+        if(!fullName || !email || !password ){
             return res.status(400).json({
                 message: `Please enter all details`
             })
         }        
-        const existingUser = await userModel.findOne({Email})
+        const existingUser = await userModel.findOne({email})
         if (existingUser) {
             return res.status(400).json({
                 message: `User with email already exist`
             })
         } 
         const saltedPassword = await bcryptjs.genSaltSync(12)
-        const hashedPassword = await bcryptjs.hashSync(Password, saltedPassword) 
+        const hashedPassword = await bcryptjs.hashSync(password, saltedPassword) 
         
         const user = new userModel({
-            Name:Name.trim(),
-            Email:Email.toLowerCase().trim(),
-            Location,
-            Password:hashedPassword,
-            PhoneNumber
+            fullName:fullName.trim(),
+            email:email.toLowerCase().trim(),
+            password:hashedPassword,
+            
         })
             const Token = jwt.sign({
                 id:user._id,
-                Email:user.Email
-                },process.env.JWT_SECRET || finalProject,
+                email:user.email
+                },process.env.JWT_SECRET,
                 {expiresIn:"30 minutes"}
             )
-            const verifyLink = `https://final-project-wq1b.onrender.com/api/v1/user/verify/${Token}`
+            const verifyLink = `localhost:2024/api/v1/verify/${Token}`
              await user.save()
             await sendMail({
                 subject:`Verification email`,
-                email:user.Email,
-                html:signUpTemplate(verifyLink,user.Name)
+                email:user.email,
+                html:signUpTemplate(verifyLink,user.fullName)
             })
             res.status(200).json({
                 message: `User created successfully`,

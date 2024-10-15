@@ -80,9 +80,6 @@ const addProduct = async(req, res)=>{
     
     
     
-    
-    
-    
     const oneProduct = async(req, res)=>{
       try {
         const {productId} = req.body
