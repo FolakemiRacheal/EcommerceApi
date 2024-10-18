@@ -1,11 +1,15 @@
-const express = required ("express")
+const express = require ("express")
 const {addProduct, removeProduct, listProduct, oneProduct} = require ("../controller/productController")
 
-const router = express.Router()
+const productRouter = express.Router()
 
-router.post("/addProduct", addProduct)
-router.get("/listProduct", listProduct)
-router.get("/oneProduct", oneProduct)
-router.delete("/removeProduct", removeProduct)
+productRouter.post('/addProduct', addProduct)
+ productRouter.get("/listProduct", listProduct)
+ productRouter.get("/oneProduct/:id", oneProduct)
+ productRouter.delete("/removeProduct/:id", removeProduct)
 
-module.exports = router
+module.exports = productRouter
+
+
+
+

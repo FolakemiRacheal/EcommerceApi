@@ -8,7 +8,12 @@ const express = require("express");
  app.use(express.json());
 
  const router = require("./router/userRouter")
+ const productRouter = require("./router/productRouter")
+ const cartRouter = require("./router/cartRouter")
+ 
 app.use("/api/v1/",router)
+app.use("/api/v1/product",productRouter)
+app.use("/api/v1/cart",cartRouter)
 dataBaseUri = process.env.dataBaseUri
 
 

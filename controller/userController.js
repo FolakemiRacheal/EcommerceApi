@@ -1,7 +1,7 @@
 const userModel = require('../model/userModel')
 const bcryptjs = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const {sendMail} = require('../helpers/sendMail')
+const sendMail = require('../helpers/sendMail')
 const signUpTemplate = require('../helpers/html')
 const fs = require('fs')
 require ("dotenv").config()
@@ -33,10 +33,11 @@ exports.signUp = async(req,res)=>{
             const Token = jwt.sign({
                 id:user._id,
                 email:user.email
-                },process.env.JWT_SECRET,
+                },process.env.JWT_SECRET ||ecommerceApi,
                 {expiresIn:"30 minutes"}
             )
-            const verifyLink = `localhost:2024/api/v1/verify/${Token}`
+            const verifyLink = `localhost:2024/api/v1/verify/user._id/${Token}`
+            
              await user.save()
             await sendMail({
                 subject:`Verification email`,
@@ -45,7 +46,7 @@ exports.signUp = async(req,res)=>{
             })
             res.status(200).json({
                 message: `User created successfully`,
-                data:user
+                data:Token
             })
         
     } catch (error) {
@@ -68,13 +69,13 @@ exports.login = async(req,res)=>{
                 message:`Please enter all details`
             })
         }
-        const checkMail = await userModel.findOne({Email:Email.toLowerCase()})
+        const checkMail = await userModel.findOne({email:email.toLowerCase()})
         if(!checkMail){
             return res.status(400).json({
                 message:`User with email not found`
             })
         }
-        const confirmPassword = await bcryptjs.compare(Password,checkMail.Password)
+        const confirmPassword = await bcryptjs.compare(password,checkMail.password)
         if(!confirmPassword){
             return res.status(400).json({
                 message:`Incorrect password`
@@ -88,7 +89,7 @@ exports.login = async(req,res)=>{
         }
         const Token = await jwt.sign({
             userId:checkMail._id,
-            Email:checkMail.Email,
+            email:checkMail.email,
         },process.env.JWT_SECRET,{expiresIn:'1h'})
 
         res.status(200).json({
@@ -124,9 +125,9 @@ exports.verifyEmail = async (req, res) => {
         // Extract the token from the request params
         const { token } = req.params;
         // Extract the email from the verified token
-        const { Email } = jwt.verify(token, process.env.JWT_SECRET);
+        const { email } = jwt.verify(token, process.env.JWT_SECRET);
         // Find the user with the extracted email
-        const user = await userModel.findOne({Email});
+        const user = await userModel.findOne({email});
 
         // Check if the user exists
         if (!user) {
