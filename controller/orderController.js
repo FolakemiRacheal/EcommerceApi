@@ -1,5 +1,5 @@
 //making payment using cash on delivery
-const payOnDelivery = async (req, res) =>{
+exports.payOnDelivery = async (req, res) =>{
 try {
    const {userId, items, amount, address } = req.body
    
@@ -30,7 +30,7 @@ try {
 }
 
 //makng payment using paypal method
-const payUsingPaypal = async (req, res) =>{
+exports.payUsingPaypal = async (req, res) =>{
     try {
         
         const {userId, items, amount, address } = req.body
@@ -85,7 +85,7 @@ const payUsingPaypal = async (req, res) =>{
     }
     }
 
-    const payUsingKora = async (req, res) =>{
+    exports.payUsingKora = async (req, res) =>{
         try {
             
         } catch (error) {
@@ -93,7 +93,7 @@ const payUsingPaypal = async (req, res) =>{
         }
         }
 //all payment from the admin dasboard
-        const allPayment = async (req, res) =>{
+        exports.allPayment = async (req, res) =>{
             try {
                 
             } catch (error) {
@@ -102,7 +102,7 @@ const payUsingPaypal = async (req, res) =>{
             }
 
             //userpayment  from the frontend
-            const userOrder = async (req, res) =>{
+            exports.userOrder = async (req, res) =>{
                 try {
                     const {userId} = req.body
 
@@ -123,7 +123,7 @@ const payUsingPaypal = async (req, res) =>{
 
 
                   // updateStatus from the admin dashboard
-                const updateStatus = async (req, res) =>{
+                exports.updateStatus = async (req, res) =>{
                     try {
                         const {orderId, status} = req.body
 

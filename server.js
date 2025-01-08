@@ -1,7 +1,7 @@
-
-require("dotenv").config()
 const express = require("express");
  const mongoose = require("mongoose");
+ require ("dotenv").config()
+ //const cloudinary = require("./config/cloudinary")
  PORT = process.env.PORT
 
  const app = express();
@@ -11,9 +11,9 @@ const express = require("express");
  const productRouter = require("./router/productRouter")
  const cartRouter = require("./router/cartRouter")
  
-app.use("/api/v1/",router)
+ app.use("/api/v1/user",router)
 app.use("/api/v1/product",productRouter)
-app.use("/api/v1/cart",cartRouter)
+// app.use("/api/v1/cart",cartRouter)
 dataBaseUri = process.env.dataBaseUri
 
 
@@ -28,3 +28,4 @@ console.log("successful connection to database")
  app.listen(PORT,()=>{
     console.log(`server is up and running on ${PORT}` )
  })
+

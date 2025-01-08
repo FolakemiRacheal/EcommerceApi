@@ -1,7 +1,7 @@
-//add to cart
+const userModel = require ("../model/userModel")
+//const productModel = require("../model/productModel")
 
-
-const addToCart = async(req,res) =>{
+exports.addToCart = async(req,res) =>{
 try {
 const {userId, itemId, size} = req.body
 
@@ -15,7 +15,9 @@ let cartData = await userData.cartData;
             else{
              cartData[itemId][size] = 1
             }
+            
              
+
 
         }else{
             cartData[itemId] = {}
@@ -26,20 +28,20 @@ let cartData = await userData.cartData;
 await userModel.findByIdAndUpdate(userId, {cartData})
 return res.status(200).json({
     message:"successfully added to cart",
-    data: cartData
+    
 })
 
 
     } catch (error) {
         return res.status(500).json({
-            message:"internal server error" + message
+            message:"internal server error" + error.message
         })
     }
 }
 
 
 
-const updateCart = async(req,res) =>{
+exports.updateCart = async(req,res) =>{
     try {
         const {userId, itemId, size, quantity} = req.body
        
@@ -56,12 +58,12 @@ return res.status(200).json({
 
     } catch (error) {
         return res.status(500).json({
-            message:"internal server error" + message
+            message:"internal server error" + error.message
         })
     }
 }
 
-const getUserCart = async(req,res) =>{
+exports.getUserCart = async(req,res) =>{
     try {
         const userId = req.body
 
@@ -72,7 +74,7 @@ const getUserCart = async(req,res) =>{
         })
     } catch (error) {
         return res.status(500).json({
-            message:"internal server error" + message
+            message:"internal server error" + error.message
         })
     }
 }

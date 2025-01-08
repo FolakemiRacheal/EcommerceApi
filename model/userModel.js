@@ -2,7 +2,7 @@ const mongoose= require ("mongoose")
 const express=require("express")
 
 const userSchema = new mongoose.Schema({
-    fullName:{
+    name:{
         type:String,
         require:[true,"fullName is required"]
     },
@@ -13,6 +13,10 @@ const userSchema = new mongoose.Schema({
     password:{
         type:String,
         require:[true,"password is required"]
+    },
+    cartData:{
+        type:Object,
+        default:{}
     },
 },{timestamps:true})
 

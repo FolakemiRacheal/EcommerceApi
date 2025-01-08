@@ -14,6 +14,7 @@ const transporter = await nodeMailer.createTransport(
           pass:process.env.MAIL_PASSWORD ,
         },
       }
+      
     
 )
 

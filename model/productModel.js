@@ -5,19 +5,8 @@ const productSchema = new mongoose.Schema({
     type:String,
     require:true
     },
-    brandName:{
-        type:String,
-        require:true
-    },
+    
     description:{
-        type:String,
-        require:true
-    },
-    type:{
-        type:String,
-        require:true
-    },
-    category:{
         type:String,
         require:true
     },
@@ -25,14 +14,32 @@ const productSchema = new mongoose.Schema({
         type:Number,
         require:true
     },
-    Image:{
+    image:{
+        type:Array,
+        require:true
+    },
+    category:{
+        type:Number,
+        require:true
+    },
+    subcategory:{
         type:String,
+        require:true
+    },
+    sizes:{
+        type:Array,
+        require:true
+    },
+    bestSeller:{
+        type:Boolean,
         require:true
     },
     date:{
-        type:String,
+        type:Number,
         require:true
     },
+
+
 
 
 },{timestamps:true})

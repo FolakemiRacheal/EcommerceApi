@@ -4,8 +4,7 @@ const {addToCart, updateCart, getUserCart} = require ("../controller/cartControl
 const cartRouter = express.Router()
 
 cartRouter.post('/addToCart', addToCart)
-//  cartRouter.get("/listProduct", updateCart)
-//  cartRouter.get("/oneProduct/:id", getUserCart)
-//  productRouter.delete("/removeProduct/:id", removeProduct)
-
+ cartRouter.get("/listProduct", updateCart)
+ cartRouter.get("/oneProduct/:id", getUserCart)
+ 
 module.exports = cartRouter

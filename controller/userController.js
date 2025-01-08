@@ -101,24 +101,24 @@ exports.login = async(req,res)=>{
         res.status(500).json(err.message)
     }
 }
-exports.makeAdmin = async(req, res)=> {
-    try {
-        const {id} = req.params
-        const user = await userModel.findById(id)
-        if(!user){
-            return res.status(404).json(`User with ID ${id} was not found`)
-        }
-        user.isAdmin = true
-        await user.save()
-        res.status(200).json({
-            message: `Dear ${user.Name}, you're now an admin`,
-            data: user
-        })
+// exports.makeAdmin = async(req, res)=> {
+//     try {
+//         const {id} = req.params
+//         const user = await userModel.findById(id)
+//         if(!user){
+//             return res.status(404).json(`User with ID ${id} was not found`)
+//         }
+//         user.isAdmin = true
+//         await user.save()
+//         res.status(200).json({
+//             message: `Dear ${user.Name}, you're now an admin`,
+//             data: user
+//         })
 
-    } catch (err) {
-        res.status(500).json(err.message)
-    }
-}
+//     } catch (err) {
+//         res.status(500).json(err.message)
+//     }
+//}
 
 exports.verifyEmail = async (req, res) => {
     try {
@@ -419,3 +419,21 @@ exports.deleteUser = async (req,res)=>{
         res.status(500).json(err.message)
     }
 }
+
+
+// const loginUser = async (req, res)=>{
+
+// }
+
+
+
+// const registerUser = async (req, res)=>{
+    
+// }
+
+// const adminLogin = async (req, res)=>{
+    
+// }
+
+
+// module.exports = {loginUser, registerUser,adminLogin}
